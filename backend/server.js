@@ -10,7 +10,10 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const projectRoutes = require('./routes/projectRoutes');
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    'https://project-management-tool-ynew.onrender.com'  
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'x-auth-token']
 }));

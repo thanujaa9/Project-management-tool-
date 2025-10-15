@@ -30,7 +30,7 @@ const EditTaskPage = () => {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const res = await axios.get(`http://localhost:5174/api/tasks/${taskId}`, {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`, {
           headers: { 'x-auth-token': token },
         });
         const taskData = res.data;
@@ -54,7 +54,7 @@ const EditTaskPage = () => {
     if (projectId) {
       const fetchProjectMembers = async () => {
         try {
-          const res = await axios.get(`http://localhost:5174/api/projects/${projectId}`, {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects/${projectId}`, {
             headers: { 'x-auth-token': token },
           });
           setProjectMembers(res.data.project.members || []);
@@ -79,7 +79,7 @@ const EditTaskPage = () => {
         assignedTo: assignedTo || null,
       };
 
-      await axios.put(`http://localhost:5174/api/tasks/${taskId}`, updatedData, {
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`, updatedData, {
         headers: { 'x-auth-token': token },
       });
 

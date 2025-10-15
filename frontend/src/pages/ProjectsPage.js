@@ -22,7 +22,7 @@ const ProjectsPage = () => {
           return;
         }
 
-        const res = await axios.get('http://localhost:5174/api/projects', {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects`, {
           headers: { 'x-auth-token': token },
           params: {
             search: searchTerm,
@@ -47,7 +47,7 @@ const ProjectsPage = () => {
     if (confirmDelete) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5174/api/projects/${projectId}`, {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/projects/${projectId}`, {
           headers: { 'x-auth-token': token },
         });
         setProjects(projects.filter((p) => p._id !== projectId));

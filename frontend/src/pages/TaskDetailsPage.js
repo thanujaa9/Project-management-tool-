@@ -19,7 +19,7 @@ const TaskDetailPage = () => {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const res = await axios.get(`http://localhost:5174/api/tasks/${taskId}`, {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`, {
           headers: { 'x-auth-token': token },
         });
         setTask(res.data);

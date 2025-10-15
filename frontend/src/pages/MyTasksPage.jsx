@@ -12,7 +12,7 @@ function MyTasksPage() {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5174/api/tasks/user', {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks/user`, {
           headers: { 'x-auth-token': token },
         });
         setTasks(res.data);
@@ -29,7 +29,7 @@ function MyTasksPage() {
   const handleDelete = async (taskId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5174/api/tasks/${taskId}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`, {
         headers: { 'x-auth-token': token },
       });
       setTasks(tasks.filter((task) => task._id !== taskId));

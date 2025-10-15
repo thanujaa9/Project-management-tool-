@@ -41,7 +41,7 @@ function ProjectDetailsPage() {
             return;
           }
 
-          const res = await axios.get(`http://localhost:5174/api/projects/${id}`, {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects/${id}`, {
             headers: { 'x-auth-token': token },
           });
 
@@ -66,7 +66,7 @@ function ProjectDetailsPage() {
     if (confirmDelete) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5174/api/tasks/${taskId}`, {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`, {
           headers: { 'x-auth-token': token },
         });
         setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
@@ -82,7 +82,7 @@ function ProjectDetailsPage() {
     if (confirmDelete) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5174/api/projects/${id}`, {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/projects/${id}`, {
           headers: { 'x-auth-token': token },
         });
         navigate('/projects', { replace: true }); 

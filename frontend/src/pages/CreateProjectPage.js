@@ -38,7 +38,7 @@ const CreateProjectPage = () => {
         members: membersArray,
       };
 
-      await axios.post('http://localhost:5174/api/projects', projectData, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/projects`, projectData, {
         headers: {
           'Content-Type': 'application/json',
           'x-auth-token': token, 

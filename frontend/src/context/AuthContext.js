@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       console.log("AuthContext: Loading set to false. Final isAuthenticated state (at log time):", isAuthenticated, "Final User (at log time):", user);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); 
 
   useEffect(() => {
     loadUser();

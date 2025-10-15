@@ -35,7 +35,7 @@ const CreateTaskPage = () => {
             return;
           }
 
-          const res = await axios.get(`http://localhost:5174/api/projects/${projectId}`, {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects/${projectId}`, {
             headers: { 'x-auth-token': token },
           });
 
@@ -76,7 +76,7 @@ const CreateTaskPage = () => {
         dueDate: dueDate || null,
       };
 
-      await axios.post('http://localhost:5174/api/tasks', taskData, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/tasks`, taskData, {
         headers: { 'x-auth-token': token },
       });
 

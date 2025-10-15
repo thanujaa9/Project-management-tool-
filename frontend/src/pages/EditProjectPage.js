@@ -23,7 +23,7 @@ const EditProjectPage = () => {
         return;
       }
 
-      const res = await axios.get(`http://localhost:5174/api/projects/${id}`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/projects/${id}`, {
         headers: { 'x-auth-token': token },
       });
 
@@ -69,7 +69,7 @@ const EditProjectPage = () => {
         members: membersArray,
       };
 
-      await axios.put(`http://localhost:5174/api/projects/${id}`, updatedProject, {
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/projects/${id}`, updatedProject, {
         headers: {
           'Content-Type': 'application/json',
           'x-auth-token': token,

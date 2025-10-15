@@ -1,43 +1,35 @@
 // frontend/src/pages/Auth/LoginPage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Essential for auth state
+import { useAuth } from '../../context/AuthContext'; 
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  // Get isAuthenticated, loading from AuthContext, and the login function itself
-  const { isAuthenticated, loading, login } = useAuth(); // Destructure 'login' from useAuth
+  const { isAuthenticated, loading, login } = useAuth(); 
 
-  // Effect to handle redirection *after* authentication state changes in AuthContext
   useEffect(() => {
     console.log("LoginPage useEffect triggered:");
     console.log("  AuthContext Loading:", loading);
     console.log("  AuthContext Authenticated:", isAuthenticated);
 
-    // If AuthContext has finished its initial load AND user is now authenticated, navigate.
     if (!loading && isAuthenticated) {
       console.log("LoginPage: Auth state is true, redirecting to Dashboard!");
-      // Add a small delay to ensure React Router processes the navigation
-      // after the state update has fully propagated. This helps prevent race conditions.
       setTimeout(() => {
-        navigate('/dashboard', { replace: true }); // Use replace for clean history
+        navigate('/dashboard', { replace: true }); 
       }, 50);
     }
-  }, [isAuthenticated, loading, navigate]); // Dependencies: effect runs when these values change
+  }, [isAuthenticated, loading, navigate]); 
 
-  // Handles the form submission (login attempt)
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default browser form submission
-    setMessage('Logging in...'); // Set a loading message
+    e.preventDefault(); 
+    setMessage('Logging in...'); 
     console.log("LoginPage: handleSubmit triggered. Attempting login...");
     try {
-      // Call the 'login' function from AuthContext.
-      // This function internally calls authService.login and then AuthContext's loadUser().
       await login({ email, password });
-      setMessage('Login successful!'); // Message will update, then useEffect handles navigation
+      setMessage('Login successful!'); 
       console.log("LoginPage: Login process complete. AuthContext state should now update.");
 
     } catch (error) {

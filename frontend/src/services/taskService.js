@@ -1,9 +1,9 @@
 // frontend/src/services/taskService.js
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:5174/api/tasks'; 
+const API_BASE = `${process.env.REACT_APP_API_URL}/api/tasks`; 
 
-// Set token from AuthContext
+
 export const getAuthHeader = (token) => ({
   headers: { 'x-auth-token': token },
 });

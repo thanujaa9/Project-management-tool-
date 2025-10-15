@@ -26,10 +26,10 @@ function DashboardPage() {
         const token = localStorage.getItem('token');
 
         const [projectsRes, userTasksRes] = await Promise.all([
-          axios.get('http://localhost:5174/api/projects/count', {
+          axios.get(`${process.env.REACT_APP_API_URL}/api/projects/count`, {
             headers: { 'x-auth-token': token },
           }),
-          axios.get('http://localhost:5174/api/tasks/count/user', {
+          axios.get(`${process.env.REACT_APP_API_URL}api/tasks/count/user`, {
             headers: { 'x-auth-token': token },
           }),
         ]);
@@ -113,7 +113,6 @@ function DashboardPage() {
           <p className="text-gray-700 dark:text-gray-300">Total Projects</p>
         </div>
 
-        {/* View All Projects */}
         <div
           onClick={() => navigate('/projects')}
           className="cursor-pointer bg-white dark:bg-neutral-800 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition duration-200 text-center border-l-4 border-cyan-600"
@@ -123,7 +122,6 @@ function DashboardPage() {
         </div>
       </div>
 
-      {/* Tip + Buttons (left) and Calendar (right) */}
       <div className="flex flex-col lg:flex-row justify-center gap-8 max-w-6xl mx-auto mb-16">
         {}
         <div className="flex-1 space-y-6">
@@ -158,7 +156,6 @@ function DashboardPage() {
           </div>
         </div>
 
-        {/* Right Side: Calendar */}
         <div className="flex-1 max-w-sm mx-auto bg-white dark:bg-neutral-800 shadow-md rounded-xl p-6">
           <h3 className="text-lg font-semibold text-center text-gray-800 dark:text-gray-100 mb-4">
             📅 Calendar

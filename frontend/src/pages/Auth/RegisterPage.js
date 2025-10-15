@@ -15,7 +15,7 @@ function RegisterPage() {
     try {
       const response = await authService.register({ username, email, password });
       setMessage(response.msg || 'Registration successful!');
-      navigate('/login'); // Navigate to login after successful registration
+      navigate('/login'); 
     } catch (error) {
       console.error('Registration error:', error.response?.data || error.message);
       setMessage(error.response?.data?.msg || 'Registration failed.');

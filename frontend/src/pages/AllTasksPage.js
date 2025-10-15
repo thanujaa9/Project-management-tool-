@@ -12,7 +12,7 @@ function AllTasksPage() {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5174/api/tasks', {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks`, {
           headers: { 'x-auth-token': token },
         });
         setTasks(res.data);

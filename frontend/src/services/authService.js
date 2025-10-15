@@ -1,9 +1,8 @@
 // frontend/src/services/authService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5174/api/auth'; 
+const API_URL = `${process.env.REACT_APP_API_URL}/api/auth`; 
 
-// Register user
 const register = async (userData) => {
   console.log("authService: Registering user...", userData);
   const response = await axios.post(`${API_URL}/register`, userData);
@@ -17,7 +16,6 @@ const register = async (userData) => {
   return response.data;
 };
 
-// Login user
 const login = async (userData) => {
   console.log("authService: Logging in user...", userData);
   const response = await axios.post(`${API_URL}/login`, userData);
@@ -31,7 +29,6 @@ const login = async (userData) => {
   return response.data;
 };
 
-// Logout user
 const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('userId');

@@ -35,7 +35,7 @@ const TaskDetailPage = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`http://localhost:5174/api/comments/task/${taskId}`, {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/comments`, {
           headers: { 'x-auth-token': token },
         });
         setComments(res.data);

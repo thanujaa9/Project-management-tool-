@@ -29,7 +29,7 @@ function DashboardPage() {
           axios.get(`${process.env.REACT_APP_API_URL}/api/projects/count`, {
             headers: { 'x-auth-token': token },
           }),
-          axios.get(`${process.env.REACT_APP_API_URL}api/tasks/count/user`, {
+          axios.get(`${process.env.REACT_APP_API_URL}/api/tasks/count/user`, {
             headers: { 'x-auth-token': token },
           }),
         ]);

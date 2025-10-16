@@ -31,11 +31,11 @@ const TaskDetailPage = () => {
     fetchTask();
   }, [taskId, token]);
 
-  // Fetch Task Comments
+  // Fetch Task Comments - FIXED
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/comments`, {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/comments/task/${taskId}`, {
           headers: { 'x-auth-token': token },
         });
         setComments(res.data);
@@ -47,29 +47,39 @@ const TaskDetailPage = () => {
     fetchComments();
   }, [taskId, token]);
 
-  // Handle Add Comment
+  // Handle Add Comment - FIXED
   const handleAddComment = async () => {
-    if (!newComment.trim()) return;
+    console.log('🔵 Add Comment clicked');
+    console.log('Comment:', newComment);
+    console.log('Task ID:', taskId);
+    
+    if (!newComment.trim()) {
+      alert('Please enter a comment');
+      return;
+    }
 
     try {
       const res = await axios.post(
-        `http://localhost:5174/api/comments/`,
+        `${process.env.REACT_APP_API_URL}/api/comments`,
         { text: newComment, task: taskId },
         { headers: { 'x-auth-token': token } }
       );
+      console.log('✅ Comment added:', res.data);
       setComments((prev) => [...prev, res.data]);
       setNewComment('');
     } catch (err) {
-      console.error('Error adding comment:', err);
+      console.error('❌ Error adding comment:', err);
+      console.error('Error details:', err.response?.data);
       alert(err.response?.data?.msg || 'Failed to add comment');
     }
   };
 
+  // Handle Delete Comment - FIXED
   const handleDeleteComment = async (commentId) => {
     if (!window.confirm('Are you sure you want to delete this comment?')) return;
 
     try {
-      await axios.delete(`http://localhost:5174/api/comments/${commentId}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/comments/${commentId}`, {
         headers: { 'x-auth-token': token },
       });
       setComments((prev) => prev.filter((c) => c._id !== commentId));
@@ -85,11 +95,11 @@ const TaskDetailPage = () => {
     setEditedText(text);
   };
 
-  // Handle Save Edit
+  // Handle Save Edit - FIXED
   const handleSaveEdit = async () => {
     try {
       const res = await axios.put(
-        `http://localhost:5174/api/comments/${editingCommentId}`,
+        `${process.env.REACT_APP_API_URL}/api/comments/${editingCommentId}`,
         { text: editedText },
         { headers: { 'x-auth-token': token } }
       );
@@ -105,10 +115,11 @@ const TaskDetailPage = () => {
     }
   };
 
+  // Handle Delete Task - FIXED
   const handleDeleteTask = async () => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
-        await axios.delete(`http://localhost:5174/api/tasks/${taskId}`, {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`, {
           headers: { 'x-auth-token': token },
         });
         navigate(-1);
@@ -149,9 +160,9 @@ const TaskDetailPage = () => {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-4">
-          <Link to={`/tasks/${taskId}/edit`} className="px-4 py-2 bg-blue-600 text-white rounded-lg">✏️ Edit</Link>
-          <button onClick={handleDeleteTask} className="px-4 py-2 bg-red-600 text-white rounded-lg">🗑️ Delete</button>
-          <button onClick={() => navigate(-1)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">← Back</button>
+          <Link to={`/tasks/${taskId}/edit`} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">✏️ Edit</Link>
+          <button onClick={handleDeleteTask} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">🗑️ Delete</button>
+          <button onClick={() => navigate(-1)} className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500">← Back</button>
         </div>
 
         {/* Comments Section */}
@@ -171,11 +182,11 @@ const TaskDetailPage = () => {
                       <textarea
                         value={editedText}
                         onChange={(e) => setEditedText(e.target.value)}
-                        className="w-full p-2 mt-2 rounded border"
+                        className="w-full p-2 mt-2 rounded border dark:bg-neutral-600 dark:text-white"
                       />
                       <div className="mt-2 flex gap-2">
-                        <button onClick={handleSaveEdit} className="px-3 py-1 bg-green-500 text-white rounded">Save</button>
-                        <button onClick={() => setEditingCommentId(null)} className="px-3 py-1 bg-gray-400 text-white rounded">Cancel</button>
+                        <button onClick={handleSaveEdit} className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Save</button>
+                        <button onClick={() => setEditingCommentId(null)} className="px-3 py-1 bg-gray-400 text-white rounded hover:bg-gray-500">Cancel</button>
                       </div>
                     </>
                   ) : (
@@ -184,13 +195,13 @@ const TaskDetailPage = () => {
                       <div className="mt-2 text-sm flex gap-3">
                         <button
                           onClick={() => startEditComment(comment._id, comment.text)}
-                          className="text-blue-600"
+                          className="text-blue-600 hover:text-blue-800"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDeleteComment(comment._id)}
-                          className="text-red-600"
+                          className="text-red-600 hover:text-red-800"
                         >
                           Delete
                         </button>
@@ -208,11 +219,11 @@ const TaskDetailPage = () => {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Add your comment..."
-              className="w-full p-3 rounded border focus:ring focus:ring-blue-300"
+              className="w-full p-3 rounded border focus:ring focus:ring-blue-300 dark:bg-neutral-700 dark:text-white dark:border-neutral-600"
             />
             <button
               onClick={handleAddComment}
-              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg"
+              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               ➕ Add Comment
             </button>
